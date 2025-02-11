@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -13,8 +13,9 @@ import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { useNavigate } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import SearchBar from '../components/searchBar'
+
 
 const drawerWidth = 240;
 const navItems = ["New Products", "Categories", "Login"];
@@ -22,10 +23,18 @@ const navItems = ["New Products", "Categories", "Login"];
 function Header(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [searchQuery, setSearchQuery] = useState(""); 
+  
+  
   const navigate = useNavigate();
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
+  };
+
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    navigate(`/products?search=${query}`); 
   };
 
   const drawer = (
@@ -73,7 +82,7 @@ function Header(props) {
             eCommerce-ReactApp
           </Typography>
 
-          <SearchBar />
+          <SearchBar onSearch={handleSearch} inputColor="white" borderBottomColor="white" SearchIconColor="white" />
 
           <Box sx={{ display: { xs: "none", sm: "flex" } }}>
             <ListItem disablePadding>
@@ -98,7 +107,7 @@ function Header(props) {
             </ListItem>
 
             <ListItem disablePadding>
-              <ListItemButton sx={{ textAlign: "center" }}>
+              <ListItemButton sx={{ textAlign: "center" }}onClick={() => navigate("/login")}>
                 <ListItemText primary="Login" />
               </ListItemButton>
             </ListItem>
@@ -112,7 +121,7 @@ function Header(props) {
           open={mobileOpen}
           onClose={handleDrawerToggle}
           ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
+            keepMounted: true, 
           }}
           sx={{
             display: { xs: "block", sm: "none" },
@@ -129,12 +138,6 @@ function Header(props) {
   );
 }
 
-Header.propTypes = {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
-  window: PropTypes.func,
-};
+
 
 export default Header;

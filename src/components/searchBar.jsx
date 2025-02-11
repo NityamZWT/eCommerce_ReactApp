@@ -1,39 +1,38 @@
 import { useState } from "react";
-import TextField from "@mui/material/TextField";
-import InputAdornment from "@mui/material/InputAdornment";
+import { TextField, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import { useNavigate } from "react-router-dom";
 
-export default function SearchBar({ onSearch }) {
-  const [query, setQuery] = useState("");
+export default function SearchBar({ searchType = "products",paramsName='productname', queryText, inputColor, borderBottomColor, SearchIconColor }) {
+  const [query, setQuery] = useState(queryText);
+  const navigate = useNavigate();
 
-  const handleSearch = (event) => {
-    setQuery(event.target.value);
-    if (onSearch) onSearch(event.target.value); 
+  const handleKeyDown = (event) => {
+    console.log('searchbar---',searchType, paramsName, query);
+    
+    if (event.key === "Enter" && query.trim() !== "") {
+      navigate(`/${searchType}?${paramsName}=${query}`); 
+    }
   };
 
   return (
     <TextField
-    placeholder="product name "
-    variant="standard"
-    // fullWidth
-    value={query}
-    onChange={handleSearch}
-    sx={{
-      input: { color: "white" }, // Text color inside input
-      "& .MuiInput-underline:before": { borderBottomColor: "white" }, // Default underline color
-      "& .MuiInput-underline:hover:before": { borderBottomColor: "lightgray" }, // Hover color
-      "& .MuiInput-underline:after": { borderBottomColor: "white" }, // Focus color
-    }}
-    slotProps={{
-      input: {
+      placeholder={searchType=="products"?"Search products...":"Search categories..."}
+      variant="standard"
+      value={query}
+      onChange={(e) => setQuery(e.target.value)}
+      onKeyDown={handleKeyDown} 
+      sx={{
+        input: { color: inputColor },
+        "& .MuiInput-underline:before": { borderBottomColor: borderBottomColor },
+      }}
+      InputProps ={{
         startAdornment: (
           <InputAdornment position="start">
-            <SearchIcon sx={{ color: "white" }} />
+            <SearchIcon sx={{ color: SearchIconColor }} />
           </InputAdornment>
         ),
-      },
-    }}
-  />
-
+      }}
+    />
   );
 }

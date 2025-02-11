@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import Cards from "../components/card";
 import { Box } from "@mui/material";
-// import { Box } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
   const [productData, setProductData] = useState(null);
   const [categoryData, setCategoryData] = useState([]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchProductData() {
@@ -64,6 +66,7 @@ export default function Home() {
           flexWrap: "wrap",
           justifyContent: "space-around",
           paddingTop: "30px",
+          gap:'30px'
         }}
       >
         <Cards products={productData} />
@@ -71,8 +74,9 @@ export default function Home() {
       <Box
         sx={{
           color: "#1976d2",
-          
-        }}
+          cursor:"pointer"
+        }} 
+        onClick={() => navigate("/products")}
       >
         more Products...
       </Box>
@@ -113,6 +117,7 @@ export default function Home() {
               fontSize: "26px",
               // fontWeight:'600'
             }}
+            onClick={() => navigate(`/categories?categoryname=${category.name}`)}
           >
             {category.name}
           </Box>
@@ -121,8 +126,10 @@ export default function Home() {
       <Box
         sx={{
           color: "#1976d2",
-          paddingTop:'20px'
+          paddingTop:'20px',
+          cursor:"pointer"
         }}
+        onClick={() => navigate("/categories")}
       >
         All categories with products...
       </Box>
