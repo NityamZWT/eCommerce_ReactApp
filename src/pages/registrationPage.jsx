@@ -8,7 +8,7 @@ export default function RegistrationForm() {
     last_name: "",
     email: "",
     password: "",
-    role: "user",
+    role: "customer",
   });
 
   const navigate = useNavigate();
@@ -90,7 +90,7 @@ export default function RegistrationForm() {
         value={formData.role}
         onChange={handleChange}
       >
-        <MenuItem value="user">User</MenuItem>
+        <MenuItem value="customer">Customer</MenuItem>
         <MenuItem value="admin">Admin</MenuItem>
       </TextField>
       <Button type="submit" variant="contained" color="primary">

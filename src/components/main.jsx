@@ -8,6 +8,10 @@ import Login from "../pages/loginPage";
 import RegistrationForm from "../pages/registrationPage";
 import AddProductForm from "../pages/addProductPage";
 import UpdateProductPage from "../pages/updateProductPage";
+import AllUsersList from "../pages/allusersPage";
+import UserProfile from '../pages/userProfilePage';
+import UpdateProfile from "../pages/updateProfilePage";
+import Cart from "../pages/cartPage";
 
 export default function Main() {
   return (
@@ -20,6 +24,15 @@ export default function Main() {
       <Route path='/register' element ={<RegistrationForm/>}/>
       <Route path='/addproduct' element ={<AddProductForm/>}/>
       <Route path='/updateproduct/:id' element ={<UpdateProductPage/>}/>
+      <Route path='/allusers' element ={<AllUsersList/>}/>
+      <Route path='/userprofile' element ={<UserProfile/>}/>
+      <Route path='/updateprofile' element ={<UpdateProfile/>}/>
+      <Route path='/mycart' element ={<Cart/>}/>
+
+
+
+
+
 
     </Routes>
   );

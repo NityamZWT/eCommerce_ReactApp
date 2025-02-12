@@ -13,20 +13,25 @@ import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { useNavigate} from "react-router-dom";
-import SearchBar from '../components/searchBar'
-
+import { useNavigate } from "react-router-dom";
+import SearchBar from "../components/searchBar";
+import UserProfile from "./profileImage";
 
 const drawerWidth = 240;
 const navItems = ["New Products", "Categories", "Login"];
 
 function Header(props) {
   const { window } = props;
-  const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [searchQuery, setSearchQuery] = useState(""); 
-  
-  
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+
   const navigate = useNavigate();
+  const jwtToken = localStorage.getItem("jwtToken");
+  console.log("jwtToken--", jwtToken);
+  const userName = localStorage.getItem("userName");
+  console.log("user name--", userName);
+  const userRole = localStorage.getItem("userRole");
+  console.log("user role--", userRole);
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -34,7 +39,14 @@ function Header(props) {
 
   const handleSearch = (query) => {
     setSearchQuery(query);
-    navigate(`/products?search=${query}`); 
+    navigate(`/products?search=${query}`);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("jwtToken");
+    localStorage.removeItem("userRole");
+    localStorage.removeItem("userName");
+    window.location.reload();
   };
 
   const drawer = (
@@ -72,7 +84,7 @@ function Header(props) {
           >
             <MenuIcon />
           </IconButton>
-          
+
           <Typography
             variant="h6"
             component="div"
@@ -82,17 +94,30 @@ function Header(props) {
             eCommerce-ReactApp
           </Typography>
 
-          <SearchBar onSearch={handleSearch} inputColor="white" borderBottomColor="white" SearchIconColor="white" />
+          <SearchBar
+            onSearch={handleSearch}
+            inputColor="white"
+            borderBottomColor="white"
+            SearchIconColor="white"
+          />
 
-          <Box sx={{ display: { xs: "none", sm: "flex" } }}>
+          <Box
+            sx={{ display: { xs: "none", sm: "flex" }, alignItems: "center" }}
+          >
             <ListItem disablePadding>
-              <ListItemButton sx={{ textAlign: "center" }} onClick={() => navigate("/")}>
+              <ListItemButton
+                sx={{ textAlign: "center" }}
+                onClick={() => navigate("/")}
+              >
                 <ListItemText primary="Home" />
               </ListItemButton>
             </ListItem>
 
             <ListItem disablePadding>
-              <ListItemButton sx={{ textAlign: "center" }} onClick={() => navigate("/products")}>
+              <ListItemButton
+                sx={{ textAlign: "center" }}
+                onClick={() => navigate("/products")}
+              >
                 <ListItemText primary="Products" />
               </ListItemButton>
             </ListItem>
@@ -105,12 +130,56 @@ function Header(props) {
                 <ListItemText primary="Categories" />
               </ListItemButton>
             </ListItem>
-
-            <ListItem disablePadding>
-              <ListItemButton sx={{ textAlign: "center" }}onClick={() => navigate("/login")}>
-                <ListItemText primary="Login" />
-              </ListItemButton>
-            </ListItem>
+            {userRole === "admin" ? (
+              <ListItem disablePadding>
+                <ListItemButton
+                  sx={{ textAlign: "center" }}
+                  onClick={() => navigate("/allusers")}
+                >
+                  <ListItemText primary="Users" />
+                </ListItemButton>
+              </ListItem>
+            ) : undefined}
+            {userRole === "customer" ? (
+              <ListItem disablePadding>
+                <ListItemButton
+                  sx={{ textAlign: "center" }}
+                  onClick={() => navigate("/mycart")}
+                >
+                  <ListItemText primary="Cart" />
+                </ListItemButton>
+              </ListItem>
+            ) : undefined}
+            {jwtToken === null ? (
+              <ListItem disablePadding>
+                <ListItemButton
+                  sx={{ textAlign: "center" }}
+                  onClick={() => navigate("/login")}
+                >
+                  <ListItemText primary="Login" />
+                </ListItemButton>
+              </ListItem>
+            ) : (
+              <ListItem disablePadding>
+                <ListItemButton
+                  sx={{ textAlign: "center" }}
+                  onClick={() => {
+                    navigate("/");
+                    handleLogout();
+                  }}
+                >
+                  <ListItemText primary="logout" />
+                </ListItemButton>
+              </ListItem>
+            )}
+            {jwtToken === null && userName === null ? undefined : (
+              <ListItem disablePadding>
+                    
+                    <ListItemButton onClick={()=>{navigate("/userprofile")}}>
+                  <UserProfile userName={userName} />
+                </ListItemButton>
+              </ListItem>
+            )}
           </Box>
         </Toolbar>
       </AppBar>
@@ -121,7 +190,7 @@ function Header(props) {
           open={mobileOpen}
           onClose={handleDrawerToggle}
           ModalProps={{
-            keepMounted: true, 
+            keepMounted: true,
           }}
           sx={{
             display: { xs: "block", sm: "none" },
@@ -137,7 +206,5 @@ function Header(props) {
     </>
   );
 }
-
-
 
 export default Header;

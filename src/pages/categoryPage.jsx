@@ -1,36 +1,39 @@
-import { Box } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import Cards from "../components/card";
 import SearchBar from "../components/searchBar";
 import { useLocation, useNavigate } from "react-router-dom";
+import AddCategoryModal from "../components/addCategoryModel"; 
 
 export default function Categories() {
   const [categoryData, setCategoryData] = useState([]);
+  const [open, setOpen] = useState(false);
 
   const location = useLocation();
-
+  const userRole = localStorage.getItem("userRole");
   const navigate = useNavigate();
 
   const queryParams = new URLSearchParams(location.search);
   const categoryQuery = queryParams.get("categoryname") || "";
 
-  useEffect(() => {
-    async function fetchCategoryData() {
-      try {
-        const response = await fetch(
-          `http://localhost:3000/api/categories?categoryname=${categoryQuery}`
-        );
-        if (!response.ok) throw new Error("Failed to fetch category");
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
-        const jsonData = await response.json();
-        console.log("Fetched Data:", jsonData);
+  const fetchCategoryData = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/api/categories?categoryname=${categoryQuery}`
+      );
+      if (!response.ok) throw new Error("Failed to fetch category");
 
-        setCategoryData(jsonData.data);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
+      const jsonData = await response.json();
+      setCategoryData(jsonData.data);
+    } catch (error) {
+      console.error("Error fetching categories:", error);
     }
+  };
 
+  useEffect(() => {
     fetchCategoryData();
   }, [categoryQuery]);
 
@@ -45,9 +48,15 @@ export default function Categories() {
           textAlign: "left",
           display: "flex",
           justifyContent: "space-between",
+          alignItems: "center",
         }}
       >
         All Available Categories
+        {userRole === "admin" ? (
+          <Button onClick={handleOpen} variant="contained">
+            Add New Category
+          </Button>
+        ) : null}
         <SearchBar
           searchType="categories"
           paramsName="categoryname"
@@ -59,7 +68,9 @@ export default function Categories() {
       </Box>
 
       {categoryData.length === 0 ? (
-        <h1>No Category Found!</h1>
+        <Box>
+          <h1>No Category Found!</h1>
+        </Box>
       ) : (
         categoryData.map((category) => (
           <Box
@@ -80,12 +91,25 @@ export default function Categories() {
               {category.name}
             </Box>
 
-            <Box sx={{ width: "100%", display: "flex", flexDirection: "row",gap:'30px', flexWrap:'wrap' }}>
+            <Box
+              sx={{
+                width: "100%",
+                display: "flex",
+                flexDirection: "row",
+                gap: "30px",
+                flexWrap: "wrap",
+              }}
+            >
               <Cards products={category.products} />
             </Box>
           </Box>
         ))
       )}
+      <AddCategoryModal
+        open={open}
+        handleClose={handleClose}
+        onCategoryAdded={fetchCategoryData}
+      />
     </>
   );
 }

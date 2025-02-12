@@ -39,7 +39,7 @@ export default function ProductPage() {
         <Box sx={{ color: "#1976d2", fontSize: "36px", fontWeight: "700" }}>
           No Product Found!
         </Box>
-        {userRole !=='admin'?<Button variant="contained">Contained</Button>:undefined}
+        {userRole !=='admin'?<Button variant="contained" onClick={() => navigate("/addproduct")}>Add New Product</Button>:undefined}
         
         </Box>
       ) : (
@@ -50,7 +50,7 @@ export default function ProductPage() {
             alignItems: "center",
           }}
         >
-           <Box sx={{display:'flex', width:'100%', justifyContent:'space-between'}}>
+          <Box sx={{display:'flex', width:'100%', justifyContent:'space-between', alignItems:'center' }}>
         <Box sx={{ color: "#1976d2", fontSize: "36px", fontWeight: "700" }}>
           Latest Products
         </Box>

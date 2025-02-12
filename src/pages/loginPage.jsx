@@ -34,6 +34,7 @@ export default function Login() {
       const decodedToken = jwtDecode(jsonData.data.Token);
 
       localStorage.setItem('userRole',decodedToken.role)
+      localStorage.setItem('userName', decodedToken.name)
 
       navigate('/')
     } catch (error) {

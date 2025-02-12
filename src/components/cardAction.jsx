@@ -3,8 +3,10 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
-export default function CardActionsComponent({ productId, ProductName }) {
+
+export default function CardActionsComponent({ productId, ProductName, quantity=1 }) {
   const userRole = localStorage?.getItem("userRole") || undefined;
   const navigate = useNavigate();
 
@@ -17,7 +19,6 @@ export default function CardActionsComponent({ productId, ProductName }) {
 
     try {
       const token = localStorage.getItem("jwtToken");
-      console.log("jwtToken---", token);
 
       const response = await fetch(`http://localhost:3000/api/products/${id}`, {
         method: "DELETE",
@@ -27,6 +28,7 @@ export default function CardActionsComponent({ productId, ProductName }) {
         },
       });
       if (!response.ok) throw new Error("Failed to delete product");
+      
 
       alert("Product deleted successfully!");
       window.location.reload();
@@ -34,6 +36,51 @@ export default function CardActionsComponent({ productId, ProductName }) {
       console.error("Error deleting product:", error);
     }
   };
+
+  const handleAddToCart = async (e) => {
+    e.stopPropagation();
+
+    try {
+      const token = localStorage.getItem("jwtToken");
+      if (!token){
+        navigate('/login')
+        alert('please login first to use cart!')
+        return;
+      };
+      const decodedToken = jwtDecode(token);
+      const userId = decodedToken?.id; 
+
+      const cartData = {
+        user_id: userId,
+        product_id: productId,
+        quantity: quantity
+      };
+
+      const response = await fetch("http://localhost:3000/api/cart", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(cartData),
+      });
+      
+      const jsonData = await response.json();
+      console.log('jsondata---',jsonData);
+      
+      if(jsonData.data.type=='ALREADY EXISTS'){
+        alert('product already exists in cart!')
+        return;
+      }
+      if (!response.ok) throw new Error("Failed to add to cart");
+
+      alert("Product added to cart successfully!");
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+      alert(error.message);
+    }
+  };
+
 
   return (
     <div
@@ -88,6 +135,7 @@ export default function CardActionsComponent({ productId, ProductName }) {
               "&:hover": { backgroundColor: "darkblue" },
             }}
             size="small"
+            onClick={(e)=>{handleAddToCart(e)}}
           >
             Add To Cart
           </Button>

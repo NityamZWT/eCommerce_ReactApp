@@ -1,17 +1,14 @@
-import { Box, Button, Typography, IconButton } from "@mui/material";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import ShareIcon from "@mui/icons-material/Share";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { Box, Button, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Cards from "../components/card";
+import CardActionsComponent from "../components/cardAction";
 
 export default function ProductDetail() {
-  const { productId } = useParams();
-  console.log("productId---", productId);
-
   const [product, setProduct] = useState(null);
+  const [quantity, setQuantity] = useState(1);
 
+  const { productId } = useParams();
   useEffect(() => {
     async function fetchProduct() {
       try {
@@ -29,6 +26,16 @@ export default function ProductDetail() {
 
     fetchProduct();
   }, [productId]);
+
+  const handleIncrement = () => {
+    setQuantity((prev) => prev + 1);
+  };
+
+  const handleDecrement = () => {
+    if (quantity > 1) {
+      setQuantity((prev) => prev - 1);
+    }
+  };
 
   if (!product) {
     return (
@@ -71,28 +78,14 @@ export default function ProductDetail() {
         />
       </Box>
 
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          gap: "20px",
-          marginTop: "20px",
-        }}
-      >
-        <IconButton color="primary">
-          <FavoriteBorderIcon />
-        </IconButton>
-        <IconButton color="primary">
-          <ShareIcon />
-        </IconButton>
-        <Button
-          variant="contained"
-          color="primary"
-          startIcon={<ShoppingCartIcon />}
-        >
-          Add to Cart
-        </Button>
+      <Box sx={{ maxWidth: "400px", marginX: "auto", paddingTop: "20px" }}>
+        <CardActionsComponent
+          productId={product.id}
+          ProductName={product.name}
+          quantity={quantity}
+        />
       </Box>
+
       <Box
         sx={{
           display: "flex",
@@ -145,7 +138,59 @@ export default function ProductDetail() {
         >
           Category: {product.category.name}
         </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            marginTop: "20px",
+            fontSize: "20px",
+          }}
+        >
+          <Box>
+            <Typography
+              variant="h5"
+              sx={{ marginTop: "30px", fontWeight: "bold" }}
+            >
+              Quantity
+            </Typography>
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 2,
+              border: "1px solid #ccc",
+              borderRadius: "8px",
+              padding: "5px 10px",
+              width: "fit-content",
+              // backgroundColor: "#f9f9f9",
+            }}
+          >
+            <Button
+              variant="contained"
+              onClick={handleDecrement}
+              disabled={quantity <= 1}
+              sx={{ minWidth: "40px", height: "40px" }}
+            >
+              -
+            </Button>
 
+            <Typography
+              variant="h6"
+              sx={{ minWidth: "40px", textAlign: "center" }}
+            >
+              {quantity}
+            </Typography>
+
+            <Button
+              variant="contained"
+              onClick={handleIncrement}
+              sx={{ minWidth: "40px", height: "40px" }}
+            >
+              +
+            </Button>
+          </Box>
+        </Box>
         {product.category.products === null ? (
           <Box sx={{ display: "none" }}></Box>
         ) : (
