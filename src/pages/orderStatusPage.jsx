@@ -2,15 +2,15 @@ import React, { useEffect, useState } from "react";
 import {Box} from "@mui/material";
 import OrderCard from "../components/orderCard";
 
-export default function OrderPage() {
+export default function OrderStatus() {
   const [orders, setOrders] = useState([]);
  
   const token = localStorage.getItem("jwtToken");
 
   useEffect(() => {
-    const fetchOrders = async () => {
+    const fetchAllOrders = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/orders", {
+        const response = await fetch("http://localhost:3000/api/orders/allorders", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -29,8 +29,31 @@ export default function OrderPage() {
       }
     };
 
-    fetchOrders();
+    fetchAllOrders();
   }, []);
+
+  const handleUpdateStatus = async(id, status)=>{
+    try {
+        const response = await fetch(`http://localhost:3000/api/orders/${id}/status`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body:JSON.stringify({ status })
+          });
+  
+          const data = await response.json();
+          if (!response.ok)
+            throw new Error(data.message || "Failed to fetch orders");
+
+          window.location.reload();
+
+    } catch (error) {
+        console.error("Error fetching orders:", error);
+        alert(error.message);
+    }
+  }
 
   return (
     <Box sx={{ width: "100%", padding: 3 }}>
@@ -46,11 +69,11 @@ export default function OrderPage() {
           textAlign: "center",
         }}
       >
-        Order History
+        Pending Orders
       </Box>
 
       {orders.map((order) => (
-        <OrderCard order={order}/>
+        <OrderCard order={order} handleUpdateStatus={handleUpdateStatus}/>
       ))}
     </Box>
   );

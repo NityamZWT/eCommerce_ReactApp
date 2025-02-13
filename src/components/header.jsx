@@ -23,7 +23,7 @@ const navItems = ["New Products", "Categories", "Login"];
 function Header(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
+  // const [searchQuery, setSearchQuery] = useState("");
 
   const navigate = useNavigate();
   const jwtToken = localStorage.getItem("jwtToken");
@@ -38,7 +38,7 @@ function Header(props) {
   };
 
   const handleSearch = (query) => {
-    setSearchQuery(query);
+    // setSearchQuery(query);
     navigate(`/products?search=${query}`);
   };
 
@@ -160,7 +160,19 @@ function Header(props) {
                 </ListItemButton>
               </ListItem>
             ) : undefined}
+            {userRole === "admin" ? (
+              <ListItem disablePadding>
+                <ListItemButton
+                  sx={{ textAlign: "center" }}
+                  onClick={() => navigate("/orders/allorders")}
+                >
+                  <ListItemText primary="Orders" />
+                </ListItemButton>
+              </ListItem>
+            ) : undefined}
             {jwtToken === null ? (
+              <>
+              {/* {navigate('/')} */}
               <ListItem disablePadding>
                 <ListItemButton
                   sx={{ textAlign: "center" }}
@@ -169,6 +181,7 @@ function Header(props) {
                   <ListItemText primary="Login" />
                 </ListItemButton>
               </ListItem>
+              </>
             ) : (
               <ListItem disablePadding>
                 <ListItemButton

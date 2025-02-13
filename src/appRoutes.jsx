@@ -1,18 +1,19 @@
 import { Routes, Route } from "react-router-dom";
-import Home from "../pages/homePage";
+import Home from "./pages/homePage";
 
-import Categories from "../pages/categoryPage";
-import ProductPage from "../pages/productPage";
-import ProductDetail from "../pages/productDetailPage";
-import Login from "../pages/loginPage";
-import RegistrationForm from "../pages/registrationPage";
-import AddProductForm from "../pages/addProductPage";
-import UpdateProductPage from "../pages/updateProductPage";
-import AllUsersList from "../pages/allusersPage";
-import UserProfile from '../pages/userProfilePage';
-import UpdateProfile from "../pages/updateProfilePage";
-import Cart from "../pages/cartPage";
-import OrderPage from "../pages/orderPage";
+import Categories from "./pages/categoryPage";
+import ProductPage from "./pages/productPage";
+import ProductDetail from "./pages/productDetailPage";
+import Login from "./pages/loginPage";
+import RegistrationForm from "./pages/registrationPage";
+import AddProductForm from "./pages/addProductPage";
+import UpdateProductPage from "./pages/updateProductPage";
+import AllUsersList from "./pages/allusersPage";
+import UserProfile from './pages/userProfilePage';
+import UpdateProfile from "./pages/updateProfilePage";
+import Cart from "./pages/cartPage";
+import OrderPage from "./pages/orderPage";
+import OrderStatus from "./pages/orderStatusPage";
 
 export default function Main() {
   return (
@@ -30,6 +31,8 @@ export default function Main() {
       <Route path='/updateprofile' element ={<UpdateProfile/>}/>
       <Route path='/mycart' element ={<Cart/>}/>
       <Route path="/orders" element={<OrderPage />} />
+      <Route path="/orders/allorders" element={<OrderStatus />} />
+
     </Routes>
   );
 }

@@ -11,9 +11,9 @@ export default function ProductPage() {
   const userRole = localStorage.getItem("userRole");
 
   const queryParams = new URLSearchParams(location.search);
-  
-  const searchQuery = queryParams.get("productname") || ""; 
-  
+
+  const searchQuery = queryParams.get("productname") || "";
+
   useEffect(() => {
     async function fetchProducts() {
       try {
@@ -30,17 +30,26 @@ export default function ProductPage() {
     }
 
     fetchProducts();
-  }, [searchQuery]); 
+  }, [searchQuery]);
 
   return (
     <>
       {productData.length === 0 ? (
-        <Box sx={{display:'flex', width:'100%', justifyContent:'space-between'}}>
-        <Box sx={{ color: "#1976d2", fontSize: "36px", fontWeight: "700" }}>
-          No Product Found!
-        </Box>
-        {userRole !=='admin'?<Button variant="contained" onClick={() => navigate("/addproduct")}>Add New Product</Button>:undefined}
-        
+        <Box
+          sx={{
+            display: "flex",
+            width: "100%",
+            justifyContent: "space-between",
+          }}
+        >
+          <Box sx={{ color: "#1976d2", fontSize: "36px", fontWeight: "700" }}>
+            No Product Found!
+          </Box>
+          {userRole !== "admin" ? (
+            <Button variant="contained" onClick={() => navigate("/addproduct")}>
+              Add New Product
+            </Button>
+          ) : undefined}
         </Box>
       ) : (
         <Box
@@ -48,14 +57,29 @@ export default function ProductPage() {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            width:'100%'
           }}
         >
-          <Box sx={{display:'flex', width:'100%', justifyContent:'space-between', alignItems:'center' }}>
-        <Box sx={{ color: "#1976d2", fontSize: "36px", fontWeight: "700" }}>
-          Latest Products
-        </Box>
-        {userRole ==='admin'?<Button variant="contained" onClick={() => navigate("/addproduct")}>Add New Product</Button>:undefined}
-        </Box>
+          <Box
+            sx={{
+              display: "flex",
+              width: "100%",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Box sx={{ color: "#1976d2", fontSize: "36px", fontWeight: "700" }}>
+              Latest Products
+            </Box>
+            {userRole === "admin" ? (
+              <Button
+                variant="contained"
+                onClick={() => navigate("/addproduct")}
+              >
+                Add New Product
+              </Button>
+            ) : undefined}
+          </Box>
           <Box
             sx={{
               display: "flex",
@@ -63,7 +87,7 @@ export default function ProductPage() {
               flexWrap: "wrap",
               justifyContent: "space-around",
               paddingTop: "30px",
-              gap:'30px'
+              gap: "30px",
             }}
           >
             <Cards products={productData} />

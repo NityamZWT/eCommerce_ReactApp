@@ -5,14 +5,16 @@ import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
 import CardActionsComponent from "./cardAction"; 
 
-export default function Cards({ products }) {
+export default function Cards({ products, currentProduct }) {
   if (!products || products.length === 0) return <p>No products available</p>;
 
   const navigate = useNavigate();
 
+  
   return (
     <>
       {products.map((product) => (
+        product.id !== parseInt(currentProduct) &&
         <Card
           key={product.id}
           sx={{ display: "flex", flexDirection: "column", marginBlock: 2 }}

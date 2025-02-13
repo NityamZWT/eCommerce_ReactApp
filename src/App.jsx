@@ -1,7 +1,7 @@
 import Header from "./components/header";
 import Box from "@mui/material/Box";
 import Footer from "./components/footer";
-import Main from "./components/main";
+import Main from "./appRoutes";
 
 function App() {
   return (

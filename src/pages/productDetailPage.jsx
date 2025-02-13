@@ -7,6 +7,7 @@ import CardActionsComponent from "../components/cardAction";
 export default function ProductDetail() {
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
+  const userRole = localStorage.getItem('userRole')
 
   const { productId } = useParams();
   useEffect(() => {
@@ -138,6 +139,7 @@ export default function ProductDetail() {
         >
           Category: {product.category.name}
         </Typography>
+        {userRole !== 'admin' && 
         <Box
           sx={{
             display: "flex",
@@ -185,12 +187,14 @@ export default function ProductDetail() {
             <Button
               variant="contained"
               onClick={handleIncrement}
+              disabled={quantity >= product.stock}
               sx={{ minWidth: "40px", height: "40px" }}
             >
               +
             </Button>
           </Box>
         </Box>
+        }
         {product.category.products === null ? (
           <Box sx={{ display: "none" }}></Box>
         ) : (
@@ -210,7 +214,7 @@ export default function ProductDetail() {
                 marginTop: "10px",
               }}
             >
-              <Cards products={product.category.products} />
+              <Cards products={product.category.products} currentProduct={productId} />
             </Box>
           </Box>
         )}

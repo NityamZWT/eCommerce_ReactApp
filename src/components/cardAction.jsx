@@ -66,7 +66,6 @@ export default function CardActionsComponent({ productId, ProductName, quantity=
       });
       
       const jsonData = await response.json();
-      console.log('jsondata---',jsonData);
       
       if(jsonData.data.type=='ALREADY EXISTS'){
         alert('product already exists in cart!')

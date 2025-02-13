@@ -52,11 +52,6 @@ export default function Categories() {
         }}
       >
         All Available Categories
-        {userRole === "admin" ? (
-          <Button onClick={handleOpen} variant="contained">
-            Add New Category
-          </Button>
-        ) : null}
         <SearchBar
           searchType="categories"
           paramsName="categoryname"
@@ -64,7 +59,12 @@ export default function Categories() {
           inputColor="#1976d2"
           borderBottomColor="#1976d2"
           SearchIconColor="#1976d2"
-        />
+          />
+          {userRole === "admin" ? (
+            <Button onClick={handleOpen} variant="contained">
+              Add New Category
+            </Button>
+          ) : null}
       </Box>
 
       {categoryData.length === 0 ? (
