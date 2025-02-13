@@ -170,7 +170,7 @@ export default function Cart() {
               alt={cart.product.name}
               height="150"
               image={`http://localhost:3000/images/${cart.product.image_url}`}
-              sx={{ flex: 1 }}
+              sx={{ flex: 1,borderRadius: "8px", marginRight: 2 }}
             />
             <Box sx={{ flex: 3 }}>
               <CardContent>

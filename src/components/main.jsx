@@ -12,6 +12,7 @@ import AllUsersList from "../pages/allusersPage";
 import UserProfile from '../pages/userProfilePage';
 import UpdateProfile from "../pages/updateProfilePage";
 import Cart from "../pages/cartPage";
+import OrderPage from "../pages/orderPage";
 
 export default function Main() {
   return (
@@ -28,12 +29,7 @@ export default function Main() {
       <Route path='/userprofile' element ={<UserProfile/>}/>
       <Route path='/updateprofile' element ={<UpdateProfile/>}/>
       <Route path='/mycart' element ={<Cart/>}/>
-
-
-
-
-
-
+      <Route path="/orders" element={<OrderPage />} />
     </Routes>
   );
 }

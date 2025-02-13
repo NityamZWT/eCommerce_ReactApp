@@ -150,6 +150,16 @@ function Header(props) {
                 </ListItemButton>
               </ListItem>
             ) : undefined}
+            {userRole === "customer" ? (
+              <ListItem disablePadding>
+                <ListItemButton
+                  sx={{ textAlign: "center" }}
+                  onClick={() => navigate("/orders")}
+                >
+                  <ListItemText primary="Orders" />
+                </ListItemButton>
+              </ListItem>
+            ) : undefined}
             {jwtToken === null ? (
               <ListItem disablePadding>
                 <ListItemButton
