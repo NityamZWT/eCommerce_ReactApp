@@ -11,12 +11,13 @@ export default function ProductForm({ initialProduct, onSubmit, buttonText, isUp
     async function fetchCategories() {
       try {
         const response = await fetch("http://localhost:3000/api/categories");
-        if (!response.ok) throw new Error("Failed to fetch categories");
+        const jsonData = await response.json();
+        if (!response.ok) throw new Error(jsonData.message||"Failed to fetch categories");
 
-        const data = await response.json();
-        setCategories(data.data);
+        setCategories(jsonData.data);
       } catch (error) {
         console.error("Error fetching categories:", error);
+        alert(error.message)
       }
     }
     fetchCategories();
@@ -28,16 +29,26 @@ export default function ProductForm({ initialProduct, onSubmit, buttonText, isUp
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    console.log('files--',file);
-    
+  
     if (file) {
-      setImage(file);
+      setImage((prev) => {
+        console.log("Updated Image:", file);
+        return file;
+      });
       setImagePreview(URL.createObjectURL(file));
     }
   };
+  
+  useEffect(() => {
+    console.log("Updated Image State:", image);
+  }, [image]);
+
+  console.log('image----------------------',image);
+  
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
+    console.log('handlesubmit-----',image);
     onSubmit(product, image);
   };
 

@@ -8,7 +8,6 @@ export default function UpdateProfile() {
     first_name: "",
     last_name: "",
     email: "",
-    role: "",
   });
 
   useEffect(() => {
@@ -53,13 +52,15 @@ export default function UpdateProfile() {
         },
         body: JSON.stringify(updatedProfile),
       });
+      const jsonData = await response.json();
 
-      if (!response.ok) throw new Error("Failed to update profile");
+      if (!response.ok) throw new Error(jsonData.message ||"Failed to update profile");
 
       alert("Profile updated successfully!");
       navigate("/userprofile"); 
     } catch (error) {
       console.error("Failed to update profile:", error);
+      alert(error.message)
     }
   };
 
@@ -117,7 +118,7 @@ export default function UpdateProfile() {
       <Button variant="contained" color="primary" onClick={handleUpdateProfile} fullWidth>
         Save Changes
       </Button>
-      <Button variant="outlined" onClick={() => navigate("/profile")} fullWidth>
+      <Button variant="outlined" onClick={() => navigate("/userprofile")} fullWidth>
         Cancel
       </Button>
     </Box>

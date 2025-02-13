@@ -24,12 +24,13 @@ export default function Categories() {
       const response = await fetch(
         `http://localhost:3000/api/categories?categoryname=${categoryQuery}`
       );
-      if (!response.ok) throw new Error("Failed to fetch category");
-
       const jsonData = await response.json();
+      if (!response.ok) throw new Error(jsonData.message||"Failed to fetch category");
+
       setCategoryData(jsonData.data);
     } catch (error) {
       console.error("Error fetching categories:", error);
+      alert(error.message)
     }
   };
 

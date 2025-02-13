@@ -13,27 +13,29 @@ export default function Home() {
     async function fetchProductData() {
       try {
         const response = await fetch("http://localhost:3000/api/products/");
-        if (!response.ok) throw new Error("Failed to fetch products");
-
         const jsonData = await response.json();
-        console.log("Fetched Data:", jsonData);
+
+        if (!response.ok) throw new Error(jsonData.message||"Failed to fetch products");
 
         setProductData(jsonData.data);
       } catch (error) {
         console.error("Error fetching products:", error);
+        alert(error.message)
       }
     }
     async function fetchCategoryData() {
       try {
         const response = await fetch("http://localhost:3000/api/categories/");
-        if (!response.ok) throw new Error("Failed to fetch category");
-
         const jsonData = await response.json();
+        
+        if (!response.ok) throw new Error(jsonData.message||"Failed to fetch category");
+
         console.log("Fetched Data:", jsonData);
 
         setCategoryData(jsonData.data);
       } catch (error) {
         console.error("Error fetching categories:", error);
+        alert(error.message)
       }
     }
 

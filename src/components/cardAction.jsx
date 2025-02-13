@@ -27,13 +27,15 @@ export default function CardActionsComponent({ productId, ProductName, quantity=
           Authorization: `Bearer ${token}`,
         },
       });
-      if (!response.ok) throw new Error("Failed to delete product");
+      const jsonData = await response.json()
+      if (!response.ok) throw new Error(jsonData.message||"Failed to delete product");
       
 
       alert("Product deleted successfully!");
       window.location.reload();
     } catch (error) {
       console.error("Error deleting product:", error);
+      alert(error.message)
     }
   };
 
@@ -67,11 +69,7 @@ export default function CardActionsComponent({ productId, ProductName, quantity=
       
       const jsonData = await response.json();
       
-      if(jsonData.data.type=='ALREADY EXISTS'){
-        alert('product already exists in cart!')
-        return;
-      }
-      if (!response.ok) throw new Error("Failed to add to cart");
+      if (!response.ok) throw new Error(jsonData.message||"Failed to add to cart");
 
       alert("Product added to cart successfully!");
     } catch (error) {

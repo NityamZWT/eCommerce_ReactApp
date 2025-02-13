@@ -16,13 +16,14 @@ export default function AllUsersList() {
             Authorization: `Bearer ${token}`,
           },
         });
-        if (!response.ok) throw new Error("Failed to get all users");
+        const jsonData = await response.json()
+        if (!response.ok) throw new Error(jsonData.message||"Failed to get all users");
 
-        const jsonData = await response.json();
         setUsers(jsonData.data);
 
       } catch (error) {
-        console.error("Error getting Users :", error);
+        // console.error("Error getting Users :", error);
+        alert(error.message)
       }
     }
     handleAllUsers();

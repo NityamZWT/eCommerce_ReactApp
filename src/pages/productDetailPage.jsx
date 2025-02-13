@@ -16,12 +16,14 @@ export default function ProductDetail() {
         const response = await fetch(
           `http://localhost:3000/api/products/${productId}`
         );
-        if (!response.ok) throw new Error("Failed to fetch product details");
-
         const jsonData = await response.json();
+
+        if (!response.ok) throw new Error(jsonData.message||"Failed to fetch product details");
+
         setProduct(jsonData.data);
       } catch (error) {
         console.error("Error fetching product details:", error);
+        alert(error.message)
       }
     }
 

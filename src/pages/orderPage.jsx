@@ -18,11 +18,11 @@ export default function OrderPage() {
           },
         });
 
-        const data = await response.json();
+        const jsonData = await response.json();
         if (!response.ok)
-          throw new Error(data.message || "Failed to fetch orders");
+          throw new Error(jsonData.message || "Failed to fetch orders");
 
-        setOrders(data.data);
+        setOrders(jsonData.data);
       } catch (error) {
         console.error("Error fetching orders:", error);
         alert(error.message);

@@ -28,18 +28,19 @@ export default function UserProfile() {
             },
           }
         );
-        if (!response.ok) throw new Error("Failed to get all users");
-
         const jsonData = await response.json();
+
+        if (!response.ok) throw new Error(jsonData.message||"Failed to get all users");
+
 
         setProfile(jsonData.data[0]);
       } catch (error) {
         console.error("failed to get profile", error);
+        alert(error.message)
       }
     }
     handleProfile();
   }, []);
-  console.log("profile---", profile);
 
   return (
     <>

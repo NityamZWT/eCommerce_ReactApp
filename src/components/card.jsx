@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import CardActionsComponent from "./cardAction"; 
 
 export default function Cards({ products, currentProduct }) {
+  
   if (!products || products.length === 0) return <p>No products available</p>;
 
   const navigate = useNavigate();

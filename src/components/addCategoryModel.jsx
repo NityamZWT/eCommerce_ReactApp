@@ -11,7 +11,6 @@ import {
 
 export default function AddCategoryModal({ open, handleClose, onCategoryAdded }) {
   const [category, setCategory] = useState({ name: "" });
-  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setCategory({ ...category, [e.target.name]: e.target.value });
@@ -19,7 +18,7 @@ export default function AddCategoryModal({ open, handleClose, onCategoryAdded })
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+
     const token = localStorage.getItem("jwtToken");
 
     try {
@@ -31,18 +30,18 @@ export default function AddCategoryModal({ open, handleClose, onCategoryAdded })
         },
         body: JSON.stringify(category),
       });
-
-      if (!response.ok) throw new Error("Failed to add category");
+      const jsonData = await response.json()
+      if (!response.ok) throw new Error(jsonData.message||"Failed to add category");
 
       alert("Category added successfully!");
       setCategory({ name: ""});
       onCategoryAdded(); 
       handleClose();
     } catch (error) {
+      alert(error.message)
       console.error("Error adding category:", error);
-    } finally {
-      setLoading(false);
-    }
+
+    } 
   };
 
   return (
@@ -80,8 +79,8 @@ export default function AddCategoryModal({ open, handleClose, onCategoryAdded })
               required
               sx={{ mb: 2 }}
             />
-            <Button type="submit" variant="contained" color="primary" fullWidth disabled={loading}>
-              {loading ? "Adding..." : "Add Category"}
+            <Button type="submit" variant="contained" color="primary" fullWidth >
+              Add Category
             </Button>
           </form>
         </Box>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Cards from "../components/card";
 import { Box, Button } from "@mui/material";
-import { useLocation, useNavigate } from "react-router-dom";
+import { json, useLocation, useNavigate } from "react-router-dom";
 
 export default function ProductPage() {
   const [productData, setProductData] = useState([]);
@@ -20,18 +20,21 @@ export default function ProductPage() {
         const response = await fetch(
           `http://localhost:3000/api/products?productname=${searchQuery}`
         );
-        if (!response.ok) throw new Error("Failed to fetch products");
-
         const jsonData = await response.json();
+
+        if (!response.ok) throw new Error(jsonData.message||"Failed to fetch products");
+
         setProductData(jsonData.data);
       } catch (error) {
         console.error("Error fetching products:", error);
+        alert(error.message)
       }
     }
 
     fetchProducts();
   }, [searchQuery]);
-
+      console.log('products---', productData);
+      
   return (
     <>
       {productData.length === 0 ? (

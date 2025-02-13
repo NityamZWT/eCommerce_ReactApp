@@ -25,9 +25,9 @@ export default function Login() {
         },
         body: JSON.stringify(formData),
       });
-      if (!response.ok) throw new Error("Failed to register new user!");
-
       const jsonData = await response.json();
+
+      if (!response.ok) throw new Error(jsonData.message||"Failed to register new user!");
 
       localStorage.setItem("jwtToken", jsonData.data.Token);
 
@@ -39,6 +39,7 @@ export default function Login() {
       navigate('/')
     } catch (error) {
       console.error("Error fetching products:", error);
+      alert(error.message)
     }
   };
 

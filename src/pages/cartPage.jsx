@@ -79,12 +79,13 @@ export default function Cart() {
         },
         body: JSON.stringify({ quantity: newQuantity }),
       });
-
-      if (!response.ok) throw new Error("Failed to update quantity");
+      const jsonData = await response.json()
+      if (!response.ok) throw new Error(jsonData.message||"Failed to update quantity");
 
       handleGetCart();
     } catch (error) {
       console.error("Error updating quantity:", error);
+      alert(error.message)
     }
   };
 
@@ -105,10 +106,10 @@ export default function Cart() {
         },
       });
   
-      const data = await response.json();
+      const jsonData = await response.json();
   
       if (!response.ok) {
-        throw new Error(data.message || "Failed to create order");
+        throw new Error(jsonData.message || "Failed to create order");
       }
   
       alert("Order placed successfully!");
