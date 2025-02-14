@@ -26,7 +26,7 @@ export default function Home() {
     }
     async function fetchCategoryData() {
       try {
-        const limit=1;
+        const limit=5;
         const response = await fetch(`${import.meta.env.VITE_CATEGORIES_API}?limit=${limit}`);
         const jsonData = await response.json();
         
