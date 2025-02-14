@@ -25,7 +25,7 @@ export default function Cards({ products, currentProduct }) {
             component="img"
             alt={product.name}
             height="150"
-            image={`http://localhost:3000/images/${product.image_url}`}
+            image={`${import.meta.env.VITE_IMAGE_URL}${product.image_url}`}
           />
           <CardContent>
             <Typography gutterBottom variant="h5">

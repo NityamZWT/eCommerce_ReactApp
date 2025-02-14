@@ -14,7 +14,7 @@ export default function UpdateProfile() {
     async function fetchProfile() {
       try {
         const token = localStorage.getItem("jwtToken");
-        const response = await fetch("http://localhost:3000/api/users/profile", {
+        const response = await fetch(`${import.meta.env.VITE_USERS_API}profile`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -44,7 +44,7 @@ export default function UpdateProfile() {
     const { role, ...updatedProfile } = profile;
     try {
       const token = localStorage.getItem("jwtToken");
-      const response = await fetch("http://localhost:3000/api/users/profile", {
+      const response = await fetch(`${import.meta.env.VITE_USERS_API}profile`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

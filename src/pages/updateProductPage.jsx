@@ -10,7 +10,7 @@ export default function UpdateProductPage() {
   useEffect(() => {
     async function fetchProduct() {
       try {
-        const response = await fetch(`http://localhost:3000/api/products/${id}`);
+        const response = await fetch(`${import.meta.env.VITE_PRODUCTS_API}${id}`);
         const jsonData = await response.json();
 
         if (!response.ok) throw new Error(jsonData.message||"Failed to fetch product");
@@ -21,7 +21,7 @@ export default function UpdateProductPage() {
           price: jsonData.data.price || "",
           stock: jsonData.data.stock || "",
           category_id: jsonData.data.category_id || "",
-          image_url: jsonData.data.image_url ? `http://localhost:3000/images/${jsonData.data.image_url}` : null,
+          image_url: jsonData.data.image_url ? `${import.meta.env.VITE_IMAGE_URL}${jsonData.data.image_url}` : null,
         });
       } catch (error) {
         // console.error("Error fetching product:", error);
@@ -45,7 +45,7 @@ export default function UpdateProductPage() {
     }
     
     try {
-      const response = await fetch(`http://localhost:3000/api/products/${id}`, {
+      const response = await fetch(`${import.meta.env.VITE_PRODUCTS_API}${id}`, {
         method: "PATCH",
         headers: { Authorization: `Bearer ${token}` },
         body: formData,

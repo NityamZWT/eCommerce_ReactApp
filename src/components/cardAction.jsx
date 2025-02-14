@@ -20,7 +20,7 @@ export default function CardActionsComponent({ productId, ProductName, quantity=
     try {
       const token = localStorage.getItem("jwtToken");
 
-      const response = await fetch(`http://localhost:3000/api/products/${id}`, {
+      const response = await fetch(`${import.meta.env.VITE_PRODUCTS_API}${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -58,7 +58,7 @@ export default function CardActionsComponent({ productId, ProductName, quantity=
         quantity: quantity
       };
 
-      const response = await fetch("http://localhost:3000/api/cart", {
+      const response = await fetch(`${import.meta.env.VITE_CART_API}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

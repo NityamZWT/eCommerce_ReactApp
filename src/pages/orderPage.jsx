@@ -10,7 +10,7 @@ export default function OrderPage() {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/orders", {
+        const response = await fetch(`${import.meta.env.VITE_ORDERS_API}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

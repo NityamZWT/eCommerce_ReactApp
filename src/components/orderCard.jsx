@@ -31,7 +31,7 @@ export default function OrderCard({ order, handleUpdateStatus }) {
               Total Price: ₹ {order.total_price}
             </Typography>
           </Box>
-          {userRole === "customer" && (
+          
             <Box sx={{ alignSelf: "center" }}>
               <Typography
                 variant="body1"
@@ -47,7 +47,6 @@ export default function OrderCard({ order, handleUpdateStatus }) {
                 {order.status}
               </Typography>
             </Box>
-          )}
         </Box>
 
         {order.oder_item.map((item) => (
@@ -68,7 +67,7 @@ export default function OrderCard({ order, handleUpdateStatus }) {
                 component="img"
                 alt={item.product.name}
                 height="80"
-                image={`http://localhost:3000/images/${item.product.image_url}`}
+                image={`${import.meta.env.VITE_IMAGE_URL}${item.product.image_url}`}
                 sx={{ width: "80px", borderRadius: "8px", marginRight: 2 }}
               />
               <CardContent sx={{ flex: 1 }}>

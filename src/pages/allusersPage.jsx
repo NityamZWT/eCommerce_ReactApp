@@ -9,7 +9,7 @@ export default function AllUsersList() {
     async function handleAllUsers() {
       try {
         const token = localStorage.getItem("jwtToken");
-        const response = await fetch("http://localhost:3000/api/users", {
+        const response = await fetch(`${import.meta.env.VITE_USERS_API}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

@@ -11,7 +11,7 @@ export default function OrderStatus() {
     const fetchAllOrders = async () => {
       try {
         const response = await fetch(
-          "http://localhost:3000/api/orders/allorders",
+          `${import.meta.env.VITE_ORDERS_API}allorders/`,
           {
             method: "GET",
             headers: {
@@ -38,7 +38,7 @@ export default function OrderStatus() {
   const handleUpdateStatus = async (id, status) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/orders/${id}/status`,
+        `${import.meta.env.VITE_ORDERS_API}${id}/status`,
         {
           method: "PUT",
           headers: {

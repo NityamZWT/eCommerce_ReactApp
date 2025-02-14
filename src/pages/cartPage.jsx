@@ -23,7 +23,7 @@ export default function Cart() {
 
   async function handleGetCart() {
     try {
-      const response = await fetch(`http://localhost:3000/api/cart`, {
+      const response = await fetch(`${import.meta.env.VITE_CART_API}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -50,7 +50,7 @@ export default function Cart() {
       );
       if (!confirmed) return;
 
-      const response = await fetch(`http://localhost:3000/api/cart/${cartId}`, {
+      const response = await fetch(`${import.meta.env.VITE_CART_API}${cartId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -70,7 +70,7 @@ export default function Cart() {
     try {
       if (newQuantity < 1) return;
 
-      const response = await fetch(`http://localhost:3000/api/cart/${id}`, {
+      const response = await fetch(`${import.meta.env.VITE_CART_API}${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -97,7 +97,7 @@ export default function Cart() {
         return;
       }
   
-      const response = await fetch("http://localhost:3000/api/orders", {
+      const response = await fetch(`${import.meta.env.VITE_ORDERS_API}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -169,7 +169,7 @@ export default function Cart() {
               component="img"
               alt={cart.product.name}
               height="150"
-              image={`http://localhost:3000/images/${cart.product.image_url}`}
+              image={`${import.meta.env.VITE_IMAGE_URL}${cart.product.image_url}`}
               sx={{ flex: 1,borderRadius: "8px", marginRight: 2 }}
             />
             <Box sx={{ flex: 3 }}>

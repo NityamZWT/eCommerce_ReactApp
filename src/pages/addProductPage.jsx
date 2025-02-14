@@ -16,7 +16,7 @@ export default function AddProductPage() {
     if (image) formData.append("productimage", image);
 
     try {
-      const response = await fetch("http://localhost:3000/api/products", {
+      const response = await fetch(`${import.meta.env.VITE_PRODUCTS_API}`, {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
         body: formData,
@@ -25,7 +25,8 @@ export default function AddProductPage() {
       if (!response.ok) throw new Error(jsonData.message||"Failed to add product");
 
       alert("Product added successfully!");
-      navigate('/products')
+      window.location.reload()
+      navigate('/addproduct')
     } catch (error) {
       console.error("Error adding product:", error);
       alert(error.message)

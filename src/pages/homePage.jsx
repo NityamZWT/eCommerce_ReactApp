@@ -12,7 +12,8 @@ export default function Home() {
   useEffect(() => {
     async function fetchProductData() {
       try {
-        const response = await fetch("http://localhost:3000/api/products/");
+        const limit=5;
+        const response = await fetch(`${import.meta.env.VITE_PRODUCTS_API}?limit=${limit}`);
         const jsonData = await response.json();
 
         if (!response.ok) throw new Error(jsonData.message||"Failed to fetch products");
@@ -25,7 +26,8 @@ export default function Home() {
     }
     async function fetchCategoryData() {
       try {
-        const response = await fetch("http://localhost:3000/api/categories/");
+        const limit=1;
+        const response = await fetch(`${import.meta.env.VITE_CATEGORIES_API}?limit=${limit}`);
         const jsonData = await response.json();
         
         if (!response.ok) throw new Error(jsonData.message||"Failed to fetch category");

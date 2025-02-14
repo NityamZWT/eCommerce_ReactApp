@@ -19,7 +19,7 @@ export default function UserProfile() {
       try {
         const token = localStorage.getItem("jwtToken");
         const response = await fetch(
-          "http://localhost:3000/api/users/profile",
+          `${import.meta.env.VITE_USERS_API}profile`,
           {
             method: "GET",
             headers: {

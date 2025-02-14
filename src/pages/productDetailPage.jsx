@@ -14,7 +14,7 @@ export default function ProductDetail() {
     async function fetchProduct() {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/products/${productId}`
+          `${import.meta.env.VITE_PRODUCTS_API}${productId}`
         );
         const jsonData = await response.json();
 
@@ -75,7 +75,7 @@ export default function ProductDetail() {
         sx={{ display: "flex", justifyContent: "center", marginTop: "20px" }}
       >
         <img
-          src={`http://localhost:3000/images/${product.image_url}`}
+          src={`${import.meta.env.VITE_IMAGE_URL}${product.image_url}`}
           alt={product.name}
           style={{ maxWidth: "400px", borderRadius: "10px" }}
         />

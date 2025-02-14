@@ -44,7 +44,7 @@ function Header(props) {
     localStorage.removeItem("jwtToken");
     localStorage.removeItem("userRole");
     localStorage.removeItem("userName");
-    window.location.reload();
+    navigate( "/login");
   };
 
   const drawer = (

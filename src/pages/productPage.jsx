@@ -18,7 +18,7 @@ export default function ProductPage() {
     async function fetchProducts() {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/products?productname=${searchQuery}`
+          `${import.meta.env.VITE_PRODUCTS_API}?productname=${searchQuery}`
         );
         const jsonData = await response.json();
 

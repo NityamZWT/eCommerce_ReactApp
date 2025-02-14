@@ -11,18 +11,26 @@ import {
 
 export default function AddCategoryModal({ open, handleClose, onCategoryAdded }) {
   const [category, setCategory] = useState({ name: "" });
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     setCategory({ ...category, [e.target.name]: e.target.value });
+
+    setError("");
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!category.name.trim()) {
+      setError("Category name is required");
+      return;
+    }
+
     const token = localStorage.getItem("jwtToken");
 
     try {
-      const response = await fetch("http://localhost:3000/api/categories", {
+      const response = await fetch(`${import.meta.env.VITE_CATEGORIES_API}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -30,18 +38,18 @@ export default function AddCategoryModal({ open, handleClose, onCategoryAdded })
         },
         body: JSON.stringify(category),
       });
-      const jsonData = await response.json()
-      if (!response.ok) throw new Error(jsonData.message||"Failed to add category");
+
+      const jsonData = await response.json();
+      if (!response.ok) throw new Error(jsonData.message || "Failed to add category");
 
       alert("Category added successfully!");
-      setCategory({ name: ""});
-      onCategoryAdded(); 
+      setCategory({ name: "" });
+      onCategoryAdded();
       handleClose();
     } catch (error) {
-      alert(error.message)
+      setError(error.message);
       console.error("Error adding category:", error);
-
-    } 
+    }
   };
 
   return (
@@ -76,10 +84,11 @@ export default function AddCategoryModal({ open, handleClose, onCategoryAdded })
               value={category.name}
               onChange={handleChange}
               fullWidth
-              required
+              error={!!error}
+              helperText={error}
               sx={{ mb: 2 }}
             />
-            <Button type="submit" variant="contained" color="primary" fullWidth >
+            <Button type="submit" variant="contained" color="primary" fullWidth>
               Add Category
             </Button>
           </form>
