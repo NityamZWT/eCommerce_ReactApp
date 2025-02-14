@@ -33,7 +33,6 @@ export default function ProductPage() {
 
     fetchProducts();
   }, [searchQuery]);
-      console.log('products---', productData);
       
   return (
     <>

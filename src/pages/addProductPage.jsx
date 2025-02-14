@@ -14,8 +14,6 @@ export default function AddProductPage() {
     });
 
     if (image) formData.append("productimage", image);
-    console.log('formdata-----',formData);
-    
 
     try {
       const response = await fetch("http://localhost:3000/api/products", {

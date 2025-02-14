@@ -32,23 +32,14 @@ export default function ProductForm({ initialProduct, onSubmit, buttonText, isUp
   
     if (file) {
       setImage((prev) => {
-        console.log("Updated Image:", file);
         return file;
       });
       setImagePreview(URL.createObjectURL(file));
     }
-  };
-  
-  useEffect(() => {
-    console.log("Updated Image State:", image);
-  }, [image]);
-
-  console.log('image----------------------',image);
-  
+  }; 
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    console.log('handlesubmit-----',image);
     onSubmit(product, image);
   };
 

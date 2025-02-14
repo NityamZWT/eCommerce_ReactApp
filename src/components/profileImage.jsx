@@ -29,8 +29,6 @@ function stringAvatar(name) {
 }
 
 export default function UserProfile({userName}) {
-    // console.log('inside--',userName);
-    
   return (
       <Avatar {...stringAvatar(userName)}   />
   );

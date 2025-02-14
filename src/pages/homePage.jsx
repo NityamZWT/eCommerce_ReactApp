@@ -30,8 +30,6 @@ export default function Home() {
         
         if (!response.ok) throw new Error(jsonData.message||"Failed to fetch category");
 
-        console.log("Fetched Data:", jsonData);
-
         setCategoryData(jsonData.data);
       } catch (error) {
         console.error("Error fetching categories:", error);

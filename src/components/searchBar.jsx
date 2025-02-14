@@ -8,8 +8,6 @@ export default function SearchBar({ searchType = "products",paramsName='productn
   const navigate = useNavigate();
 
   const handleKeyDown = (event) => {
-    console.log('searchbar---',searchType, paramsName, query);
-    
     if (event.key === "Enter" && query.trim() !== "") {
       navigate(`/${searchType}?${paramsName}=${query}`); 
     }

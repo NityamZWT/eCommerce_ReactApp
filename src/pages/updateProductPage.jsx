@@ -41,11 +41,8 @@ export default function UpdateProductPage() {
     });
 
     if (image){
-      console.log('inside--',image);
       formData.append("productimage", image);
     }
-      
-    console.log('formDat---',formData);
     
     try {
       const response = await fetch(`http://localhost:3000/api/products/${id}`, {

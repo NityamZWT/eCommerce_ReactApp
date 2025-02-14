@@ -33,7 +33,6 @@ export default function Cart() {
       if (!response.ok) throw new Error("failed to get cart(server error)");
 
       const jsonData = await response.json();
-      // console.log(jsonData.data.cartData[0].quantity);
 
       setCarts(jsonData.data.cartData);
       setTotalAmount(jsonData.data.TotalPrice);
