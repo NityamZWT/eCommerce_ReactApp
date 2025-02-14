@@ -18,6 +18,6 @@ export default function PrivateRouteAdmin() {
     }
   } catch (error) {
     console.error("Invalid token:", error);
-    return <Navigate to="/sign-in" />;
+    return <Navigate to="/login" />;
   }
 }

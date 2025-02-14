@@ -27,19 +27,22 @@ export default function Main() {
       <Route path="/productdetail/:productId" element={<ProductDetail />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<RegistrationForm />} />
-      <Route path="/userprofile" element={<UserProfile />} />
-      <Route path="/updateprofile" element={<UpdateProfile />} />
+
       <Route element={<PrivateRouteAdmin />}>
+        <Route path="/updateprofile" element={<UpdateProfile />} />
+        <Route path="/userprofile" element={<UserProfile />} />
         <Route path="/orders/allorders" element={<OrderStatus />} />
         <Route path="/allusers" element={<AllUsersList />} />
         <Route path="/addproduct" element={<AddProductForm />} />
         <Route path="/updateproduct/:id" element={<UpdateProductPage />} />
       </Route>
       <Route element={<PrivateRouteCustomer />}>
+        <Route path="/updateprofile" element={<UpdateProfile />} />
+        <Route path="/userprofile" element={<UserProfile />} />
         <Route path="/mycart" element={<Cart />} />
         <Route path="/orders" element={<OrderPage />} />
       </Route>
-      <Route path="*" element={<NotFound/>}></Route>
+      <Route path="*" element={<NotFound />}></Route>
     </Routes>
   );
 }

@@ -23,18 +23,20 @@ const navItems = ["New Products", "Categories", "Login"];
 function Header(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
+  // const [searchQuery, setSearchQuery] = useState("");
 
   const navigate = useNavigate();
-
   const jwtToken = localStorage.getItem("jwtToken");
   const userName = localStorage.getItem("userName");
   const userRole = localStorage.getItem("userRole");
+
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
 
   const handleSearch = (query) => {
+    // setSearchQuery(query);
     navigate(`/products?search=${query}`);
   };
 
