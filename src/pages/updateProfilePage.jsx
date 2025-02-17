@@ -106,14 +106,14 @@ export default function UpdateProfile() {
         onChange={handleChange}
         fullWidth 
       />
-      <TextField
+      {/* <TextField
         label="Role"
         name="role"
         value={profile.role}
         // onChange={handleChange}
         fullWidth
         disabled 
-      />
+      /> */}
 
       <Button variant="contained" color="primary" onClick={handleUpdateProfile} fullWidth>
         Save Changes

@@ -12,7 +12,7 @@ export default function Home() {
   useEffect(() => {
     async function fetchProductData() {
       try {
-        const limit=5;
+        const limit=4;
         const response = await fetch(`${import.meta.env.VITE_PRODUCTS_API}?limit=${limit}`);
         const jsonData = await response.json();
 
@@ -26,7 +26,7 @@ export default function Home() {
     }
     async function fetchCategoryData() {
       try {
-        const limit=5;
+        const limit=4;
         const response = await fetch(`${import.meta.env.VITE_CATEGORIES_API}?limit=${limit}`);
         const jsonData = await response.json();
         
@@ -117,6 +117,7 @@ export default function Home() {
                 "0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);",
               color: "#1976d2",
               fontSize: "26px",
+              cursor:'pointer'
               // fontWeight:'600'
             }}
             onClick={() => navigate(`/categories?categoryname=${category.name}`)}

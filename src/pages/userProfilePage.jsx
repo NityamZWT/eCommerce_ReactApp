@@ -44,11 +44,13 @@ export default function UserProfile() {
 
   return (
     <>
+    <Box sx={{display:'flex', flexDirection:'column', width:'100%',gap:'20px'}}>
       <Button
         variant="contained"
         sx={{
           marginLeft: "auto",
           alignSelf:'center',
+          marginRight:'350px'
         }}
         onClick={()=>{navigate('/updateprofile')}}
       >
@@ -64,9 +66,10 @@ export default function UserProfile() {
           alignItems: "center",
           gap: "30px",
           paddingBlock:'30px',
-          width: "100%",
+          width: "60%",
           height: "100%",
-          border:'2px solid black'
+          border:'2px solid black',
+           marginX:'auto'
         }}
       >
         <Box
@@ -123,6 +126,7 @@ export default function UserProfile() {
           <Box sx={{ fontWeight: "bold" }}>Role: </Box>
           <Box>{profile.role}</Box>
         </Box>
+      </Box>
       </Box>
     </>
   );
