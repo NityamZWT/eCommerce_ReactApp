@@ -18,6 +18,8 @@ import PrivateRouteAdmin from "./utilities/privateRouteAdmin";
 import PrivateRouteCustomer from "./utilities/privateRouteCustomer";
 import NotFound from "./components/notFound";
 
+import ForgotPassword from "./pages/forgotPasswordPage";
+
 export default function Main() {
   return (
     <Routes>
@@ -29,6 +31,8 @@ export default function Main() {
       <Route path="/register" element={<RegistrationForm />} />
       <Route path="/userprofile" element={<UserProfile />} />
       <Route path="/updateprofile" element={<UpdateProfile />} />
+      <Route path="*" element={<NotFound />}/>
+      <Route path="/forgotpassword" element={<ForgotPassword/>}/>
 
       <Route element={<PrivateRouteAdmin />}>
         {/* <Route path="/updateprofile" element={<UpdateProfile />} /> */}
@@ -44,7 +48,6 @@ export default function Main() {
         <Route path="/mycart" element={<Cart />} />
         <Route path="/orders" element={<OrderPage />} />
       </Route>
-      <Route path="*" element={<NotFound />}></Route>
     </Routes>
   );
 }

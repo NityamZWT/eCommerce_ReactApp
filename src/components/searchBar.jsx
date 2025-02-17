@@ -15,7 +15,6 @@ export default function SearchBar({
   const [suggestions, setSuggestions] = useState([]);
   const navigate = useNavigate();
 
-  // Fetch suggestions when query changes
   useEffect(() => {
     const fetchSuggestions = async () => {
       if (query.trim() === "") {
@@ -38,7 +37,7 @@ export default function SearchBar({
       }
     };
 
-    const delayDebounce = setTimeout(fetchSuggestions, 300); // Prevents too many API calls
+    const delayDebounce = setTimeout(fetchSuggestions, 300); 
     return () => clearTimeout(delayDebounce);
   }, [query]);
 
